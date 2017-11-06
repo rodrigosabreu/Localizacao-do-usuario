@@ -33,7 +33,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         
         
-        /*let latitude: CLLocationDegrees = -23.586974
+        /*        
+        let latitude: CLLocationDegrees = -23.586974
         let longetude: CLLocationDegrees = -46.657355
         
         let deltaLatitude: CLLocationDegrees = 0.01
@@ -67,6 +68,34 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
     }
 
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let localizacaoUsuario: CLLocation = locations.last!//pegar ultima localizacao do usuario
+        
+        //monta exibicao do mapa
+        let latitude: CLLocationDegrees = localizacaoUsuario.coordinate.latitude
+        let longetude: CLLocationDegrees = localizacaoUsuario.coordinate.longitude
+        
+        let deltaLatitude: CLLocationDegrees = 0.01
+        let deltaLongetude: CLLocationDegrees = 0.01
+        
+        //configurar coordenadas 2D
+        let localizacao: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longetude)
+        
+        //configurar o zoom
+        let areaVisualizacao: MKCoordinateSpan = MKCoordinateSpanMake(deltaLatitude, deltaLongetude)
+        
+        //configurar uma regiao para o mapa
+        let regiao: MKCoordinateRegion = MKCoordinateRegionMake(localizacao, areaVisualizacao)
+        
+        //exibir regiao no mapa
+        mapa.setRegion(regiao, animated: true)
+        
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
